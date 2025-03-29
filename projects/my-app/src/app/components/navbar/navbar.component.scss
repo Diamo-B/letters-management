@@ -1,0 +1,55 @@
+@use '@angular/material' as mat;
+
+.spacer {
+  @include mat.slide-toggle-overrides((
+    unselected-handle-color: white,
+    unselected-hover-handle-color:#c2c2c2, 
+    unselected-track-color: #c2c2c2,
+    unselected-hover-track-color: rgb(214, 213, 213)
+  ));
+}
+
+.container {
+  display: flex;
+  align-items: center; /* Vertical alignment */
+  width: 100%;
+}
+
+.spacer {
+  flex-grow: 1;
+  position: relative;
+}
+
+.toggle-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -40%);
+  white-space: nowrap;
+}
+.navbar {
+  display: flex;
+  align-items: center; /* Vertical alignment */
+  justify-content: space-between;
+  width: 100%;
+}
+
+.text-color-base {
+  color: black !important;
+}
+
+.spacer {
+  flex: 1; /* Both left and right spacers take equal space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-container {
+  flex: 1;
+  text-align: center; /* Ensures the title is visually centered */
+  display: flex;
+  justify-content: center;
+}
+
+

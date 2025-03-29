@@ -1,0 +1,41 @@
+<!-- Preview Section -->
+@if (isPreviewMode) {
+<div class="preview">
+  <!-- sender -->
+  <p class="text-sm sender">{{ form.controls.senderAddress.value }}</p>
+
+  <!-- receiver -->
+  <div>
+    @if (form.controls.receiverAddresses.controls.length) { @for (receiver of
+    form.controls.receiverAddresses.controls; track $index) {
+    <p>{{ receiver.value }}</p>
+    } }
+  </div>
+  <br />
+
+  <!-- block A -->
+  @if (form.controls.blockA) {
+  <div class="block-a-item">
+    <p>Date: {{ form.controls.blockA.value.date | date : 'dd.MM.yyyy' }}</p>
+    <p>Contact Person: {{ form.controls.blockA.value.contact }}</p>
+  </div>
+  }
+
+  <br />
+
+  <!-- Subject -->
+  @if (form.controls.subject.value) {
+  <p class="subject">{{ form.controls.subject.value }}</p>
+  }
+
+  <!-- Body -->
+  <p>{{ form.controls.body.value }}</p>
+
+  <br />
+
+  <!-- FootNote -->
+  @if (form.controls.footnote.value) {
+  <p class="footnote">{{ form.controls.footnote.value }}</p>
+  }
+</div>
+}

@@ -1,0 +1,51 @@
+{
+  "letters": [
+    {
+      "id": 1,
+      "senderAddress": "123 Main St",
+      "receiverAddresses": ["456 Elm St", "789 Oak St"],
+      "blockA": {
+        "contact": "John Doe",
+        "date": "2024-04-01T10:00:00Z"
+      },
+      "subject": "Meeting Reminder",
+      "body": "Don't forget about our meeting tomorrow at 10 AM.",
+      "footnote": "See you there!"
+    },
+    {
+      "id": 2,
+      "senderAddress": "555 Maple Ave",
+      "receiverAddresses": ["222 Birch Rd", "333 Cedar Dr"],
+      "blockA": {
+        "contact": "Jane Smith",
+        "date": "2024-05-10T14:30:00Z"
+      },
+      "subject": "Project Update",
+      "body": "The project is progressing well. Expect completion by next month.",
+      "footnote": "More details in the next meeting."
+    },
+    {
+      "id": 3,
+      "senderAddress": "777 Pine St",
+      "receiverAddresses": ["999 Oak St", "888 Walnut Ln"],
+      "blockA": {
+        "contact": "Emily Johnson",
+        "date": "2024-04-15T09:00:00Z"
+      },
+      "subject": "Invitation to Conference",
+      "body": "You are invited to our annual conference on April 15th.",
+      "footnote": "RSVP by March 30th."
+    },
+    {
+      "id": 4,
+      "senderAddress": "444 Spruce Blvd",
+      "receiverAddresses": ["666 Redwood Ct", "111 Aspen Way"],
+      "blockA": {
+        "contact": "Michael Brown",
+        "date": "2024-06-01T12:00:00Z"
+      },
+      "body": "We are pleased to offer you the position of Software Engineer.",
+      "footnote": "Please review the contract and respond by next week."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+
+  @if (!isPreviewMode) {
+  <div>
+    <form [formGroup]="form" class="letter-form">
+      <div style="width: 65%;" class="mb-20">
+        <!-- Sender Address -->
+        <app-expandable-input
+          label="Sender Address"
+          placeholder="Enter the sender address"
+          [control]="form.controls.senderAddress"
+          [errorMessage]="'Sender Address is required'"
+        ></app-expandable-input>
+        
+        <div class="mb-2"></div>
+
+        <app-generic-dialog-container
+          [parentForm]="form"
+          formControlName="receiverAddresses"
+          [dialogComponent]="ReceiverAddressDialogComponent"
+          title="Receiver Address Details"
+          [formatItem]="formatReceiverAddress"
+        ></app-generic-dialog-container>
+
+        <app-generic-dialog-container
+          [parentForm]="form"
+          formControlName="blockA"
+          [dialogComponent]="BlockADialogComponent"
+          title="Block A Details"
+          [formatItem]="formatBlockAItem"
+        ></app-generic-dialog-container>
+      </div>
+
+
+      <app-expandable-input
+        label="Subject (Optional)"
+        placeholder="Enter the subject"
+        [control]="form.controls.subject"
+      ></app-expandable-input>
+
+      <app-expandable-input
+        label="Body"
+        placeholder="Enter the letter body"
+        [control]="form.controls.body"
+        [errorMessage]="'Body is required'"
+        [autoresize]="true"
+      ></app-expandable-input>
+
+      <app-expandable-input
+        label="Footnote (Optional)"
+        placeholder="Enter the footnote"
+        [control]="form.controls.footnote"
+      ></app-expandable-input>
+    </form>
+  </div>
+  }

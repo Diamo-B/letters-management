@@ -1,0 +1,11 @@
+<div class="letter-container">
+  @for (letter of letters(); track letter.id) {
+  <app-card
+    [title]="`Letter ${letter.id}`"
+    [subtitle]="letter.receiverAddresses[0]"
+    [footnote]="letter.subject || '--------------------------------'"
+    (cardClick)="onClick(letter)"
+    [customClasses]="['card-default']"
+  ></app-card>
+  }
+</div>

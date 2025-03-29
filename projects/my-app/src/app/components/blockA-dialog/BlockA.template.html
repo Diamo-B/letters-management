@@ -1,0 +1,65 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>Edit BlockA Details</h2>
+  <button (click)="onCancel()" class="close-button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="blockAForm">
+    <div class="form-inputs-container">
+      <app-expandable-input
+        label="Contact Person"
+        placeholder="Enter Person's Name"
+        [control]="ContactFormData"
+        [errorMessage]="'Contact Person is required'"
+        floatingLabel="always"
+        [alwaysShowError]="true"
+        [ngClass]="{
+            'mb-4': isFieldInvalid('contact')
+          }"
+      ></app-expandable-input>
+      <div class="combined-row">
+        <app-expandable-input
+          label="Date"
+          placeholder="Pick a date"
+          [control]="DateFormData"
+          [type]="'date'"
+          [forceMarkAsTouched]="true"
+          [alwaysShowError]="true"
+          [ngClass]="{
+              'mb-4': isFieldInvalid('date')
+            }"
+        ></app-expandable-input>
+      </div>
+    </div>
+    <!-- Preview Section -->
+    <div class="preview-section p-4">
+      <h3>Preview</h3>
+      <div *ngIf="blockAForm.get('date')?.value">
+        <p>Date: {{ blockAForm.get('date')?.value | date : 'fullDate' }}</p>
+      </div>
+      <div *ngIf="blockAForm.get('contact')?.value">
+        <p>Contact Person: {{ blockAForm.get('contact')?.value }}</p>
+      </div>
+      <div
+        *ngIf="
+            !blockAForm.get('date')?.value &&
+            !blockAForm.get('contact')?.value
+          "
+      >
+        <p>Please complete both fields to see the preview.</p>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="actions">
+  <app-button
+    variant="Flat"
+    label="CANCEL"
+    color="neutral"
+    (click)="onCancel()"
+  >
+  </app-button>
+  <app-button variant="Raised" label="APPLY" color="primary" (click)="onSave()">
+  </app-button>
+</mat-dialog-actions>

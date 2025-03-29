@@ -1,0 +1,72 @@
+<div style="display: flex; justify-content: space-between; align-items: center">
+  <h2 mat-dialog-title>Edit Receiver Address</h2>
+  <button (click)="onCancel()" class="close-button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="receiverAddressForm">
+    <div formArrayName="addresses" class="form-inputs-container">
+      <div
+        *ngFor="let addressLine of addressLines.controls; let i = index"
+        [formGroupName]="i"
+        class="addr-row"
+        [ngClass]="{
+          'mb-6': isAddressInvalid(i)
+        }"
+      >
+        <app-expandable-input
+          style="flex-grow: 1"
+          label="Address Line"
+          [placeholder]="'Address Line ' + (i + 1)"
+          [control]="getAddressLineControl(addressLine)"
+          [errorMessage]="'Address Line ' + (i + 1) + ' is required'"
+          floatingLabel="always"
+          [alwaysShowError]="true"
+        ></app-expandable-input>
+        <app-button
+          variant="Icon"
+          icon="delete_forever"
+          (click)="removeAddressLine(i)"
+          *ngIf="addressLines.length > 1"
+          class="mb-5"
+          color="accent"
+        ></app-button>
+      </div>
+    </div>
+    <app-button
+      variant="IconWithText"
+      label="Add Line"
+      icon="add"
+      color="primary"
+      (click)="addAddressLine()"
+    ></app-button>
+
+    <!-- Preview Section -->
+    <div class="preview-section my-4 p-4">
+      <h3>Preview</h3>
+      <ng-container *ngIf="addressLines.controls.length > 1 || addressLines.controls[0].get('addressLine')?.value; else emptyPreview">
+        <div *ngFor="let addressLine of addressLines.controls; let i = index">
+          <p>{{ addressLine.get('addressLine')?.value }}</p>
+        </div>
+      </ng-container>
+      <ng-template #emptyPreview>
+        <p>Please fill some address lines</p>
+      </ng-template>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="actions">
+  <app-button
+    variant="Flat"
+    label="CANCEL"
+    color="neutral"
+    (click)="onCancel()"
+  ></app-button>
+  <app-button
+    variant="Raised"
+    label="APPLY"
+    color="primary"
+    (click)="onSave()"
+  ></app-button>
+</mat-dialog-actions>

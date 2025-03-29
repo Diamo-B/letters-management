@@ -1,0 +1,55 @@
+<div class="navbar mb-10" [class.justify-between]="variant() === 'limited'">
+  @if (variant() == "full") {
+    <app-button
+    label="Back To Overview"
+    color="primary"
+    variant="IconWithLink"
+    icon="arrow_back"
+    [routerLink]="['/list']"
+    routerLinkActive="active"
+    (click)="backToOverview()"
+  >
+  </app-button>
+  <div class="spacer"></div>
+  }
+  <p class="text-2xl">{{ title() | titlecase }}</p>
+  @if (variant() == "full") {
+  <div class="spacer">
+    <div
+      [matTooltip]="
+        formValid() ? '' : 'Form must be valid to enable preview mode'
+      "
+      [matTooltipDisabled]="formValid()"
+    >
+      <mat-slide-toggle
+        hideIcon
+        color="primary"
+        [checked]="previewMode()"
+        (change)="togglePreviewMode()"
+        [disabled]="!formValid() && !previewMode()"
+      >
+        <span>Preview Mode</span>
+      </mat-slide-toggle>
+    </div>
+  </div>
+  }
+  @if (variant() == "full") {
+  <app-button
+    label="Save"
+    color="primary"
+    variant="Raised"
+    (click)="onSubmitClick()"
+  ></app-button>
+  }
+  @else {
+    <app-button
+    label="Add New Letter"
+    color="primary"
+    variant="Raised"
+    icon="arrow_back"
+    [routerLink]="['/create']"
+    routerLinkActive="active"
+  >
+  </app-button>
+  }
+</div>

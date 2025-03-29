@@ -3,5 +3,178 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "my-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/my-app",
+      "sourceRoot": "projects/my-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/my-app",
+            "index": "projects/my-app/src/index.html",
+            "browser": "projects/my-app/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/my-app/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/my-app/public"
+              },
+              {
+              "glob": "**/*.woff2",
+              "input": "node_modules/material-design-icons/iconfont",
+              "output": "assets/fonts"
+            }
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/material-design-icons/iconfont/material-icons.css",
+              "projects/my-app/src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "my-app:build:production"
+            },
+            "development": {
+              "buildTarget": "my-app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/my-app/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/my-app/public"
+              }
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/my-app/src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            },
+            "scripts": []
+          }
+        }
+      }
+    },
+    "design-system": {
+      "projectType": "library",
+      "root": "projects/design-system",
+      "sourceRoot": "projects/design-system/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/design-system/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/design-system/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/design-system/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/design-system/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "styles": [
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/design-system/.storybook",
+            "browserTarget": "design-system:build",
+            "compodoc": false,
+            "port": 6006,
+            "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "@fontsource/roboto/300.css",
+              "@fontsource/roboto/400.css",
+              "@fontsource/roboto/500.css",
+              "@fontsource/roboto/700.css",
+              "@fontsource/material-icons",
+              "node_modules/material-design-icons/iconfont/material-icons.css"
+            ]
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/design-system/.storybook",
+            "browserTarget": "design-system:build",
+            "compodoc": false,
+            "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "@fontsource/roboto/300.css",
+              "@fontsource/roboto/400.css",
+              "@fontsource/roboto/500.css",
+              "@fontsource/roboto/700.css",
+              "@fontsource/material-icons",
+              "node_modules/material-design-icons/iconfont/material-icons.css"
+            ],
+            "outputDir": "dist/storybook/design-system"
+          }
+        }
+      }
+    }
   }
 }

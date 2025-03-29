@@ -1,0 +1,88 @@
+<ng-container [ngSwitch]="variant">
+
+  <button
+    *ngSwitchCase="'IconWithLink'"
+    mat-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="[color === 'neutral' ? 'neutral-button' : '', buttonClasses]"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActive"
+  >
+    <mat-icon>{{ icon }}</mat-icon>&nbsp;{{ label }}
+  </button>
+
+  <button
+    *ngSwitchCase="'IconWithText'"
+    mat-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="[color === 'neutral' ? 'neutral-button' : '', buttonClasses]"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActive"
+  >
+    <mat-icon>{{ icon }}</mat-icon>&nbsp;{{ label }}
+  </button>
+
+  <button
+    *ngSwitchCase="'Icon'"
+    mat-icon-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="[color === 'neutral' ? 'neutral-button' : '', buttonClasses]"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActive"
+  >
+    <mat-icon>{{ icon }}</mat-icon>
+  </button>
+
+  <button
+    *ngSwitchCase="'Raised'"
+    mat-raised-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="[color === 'neutral' ? 'neutral-button' : '', buttonClasses]"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActive"
+  >
+    {{ label }}
+  </button>
+  
+
+  <button
+    *ngSwitchCase="'Stroked'"
+    mat-stroked-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="[color === 'neutral' ? 'neutral-button' : '', buttonClasses]"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActive"
+  >
+    {{ label }}
+  </button>
+
+  <button
+    *ngSwitchCase="'Flat'"
+    mat-flat-button
+    [color]="color"
+    [disabled]="disabled"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActive"
+    [ngClass]="[color === 'neutral' ? 'neutral-button' : '', buttonClasses]"
+  >
+    {{ label }}
+  </button>
+
+  <button
+    *ngSwitchDefault
+    mat-button
+    color="warn"
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="[color === 'neutral' ? 'neutral-button' : '', buttonClasses]"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActive"
+  >
+    {{ label }}
+  </button>
+</ng-container>
