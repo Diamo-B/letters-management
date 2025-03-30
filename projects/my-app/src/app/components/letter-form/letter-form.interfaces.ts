@@ -2,7 +2,7 @@ import { FormArray, FormControl } from '@angular/forms';
 import { BlockAItem } from '../blockA-dialog/BlockA.interfaces';
 
 export interface Letter {
-  id?: number;
+  id: string;
   senderAddress: string;
   receiverAddresses: string[];
   blockA: BlockAItem;
@@ -12,6 +12,7 @@ export interface Letter {
 }
 
 export interface FormModel {
+  id: FormControl<string>;
   senderAddress: FormControl<string>;
   receiverAddresses: FormArray<FormControl<string>>;
   blockA: FormControl<BlockAItem>;

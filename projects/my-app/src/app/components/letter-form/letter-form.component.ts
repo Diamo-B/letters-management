@@ -33,7 +33,7 @@ import { CreateLetterComponent } from '../../features/create/create.component';
 })
 export class LetterComponent {
   BlockADialogComponent = BlockADialogComponent;
-  ReceiverAddressDialogComponent = ReceiverAddressDialogComponent;
+  ReceiverAddressDialogComponent = ReceiverAddressDialogComponent; // Define the input property with a default value
 
   constructor(
     private navbarService: NavbarService,
@@ -94,6 +94,7 @@ export class LetterComponent {
 
   loadFormData(letter: Letter): void {
     this.formService.form.patchValue({
+      id: letter.id,
       senderAddress: letter.senderAddress,
       subject: letter.subject,
       body: letter.body,

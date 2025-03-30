@@ -6,10 +6,10 @@ import { NavbarService } from './navbar.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LetterFormService } from '../letter-form/letter-form.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { LetterListService } from '../../features/list/letter-list.service';
 export type navbarVariant = 'full' | 'limited';
-
+export type formMode =  'create' | 'edit';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -20,14 +20,18 @@ export type navbarVariant = 'full' | 'limited';
 export class NavbarComponent {
   title = signal<string>('my letters');
   variant = signal<navbarVariant>('limited'); // Default variant
-  
+  formMode = signal<formMode>('create');
+  private submitSubscription?: Subscription;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private navbarService: NavbarService,
     private formService: LetterFormService,
     private listService: LetterListService
-  ) {
+  ) {}
+  
+  ngOnInit(){
     this.listenToRouteChanges();
   }
 
@@ -35,17 +39,20 @@ export class NavbarComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      this.updateNavbarVariant();
+      this.handlePassedRouteData();
     });
   }
 
-  updateNavbarVariant() {
-    const data = this.route.snapshot.firstChild?.data as { navbarVariant?: navbarVariant } | undefined;
+  handlePassedRouteData() {
+    const data = this.route.snapshot.firstChild?.data as { navbarVariant?: navbarVariant,mode: formMode } | undefined;
   
     if (data?.navbarVariant) {
       this.variant.set(data.navbarVariant);
     } else {
       this.variant.set('limited'); // Default fallback
+    }
+    if(data?.mode){
+      this.formMode.set(data?.mode);
     }
   }
   
@@ -73,24 +80,36 @@ export class NavbarComponent {
   }
 
   onSubmitClick() {
-    this.formService.submitForm();
-    
-    /* if (submission.success === false) {
-      // Handle validation error case, maybe show a toast
-      console.log(submission.message);
-      return;
+    const submissionResult = this.formService.submitForm(this.formMode());
+
+    if (submissionResult && 'subscribe' in submissionResult) {
+      
+      this.submitSubscription = submissionResult.subscribe({
+        next: (response) => {
+          console.log('Form submitted successfully', response);
+
+          this.backToOverview()
+          this.router.navigate(['/list'],{
+            state: { toast: { type: "success", message: "Operation completed successfuly" } }
+          });
+
+        },
+        error: (error) => {
+          console.error('Error submitting form', error);
+          this.backToOverview();
+          this.router.navigate(['/list'],{
+            state: { toast: { type: "error", message: "Operation couldn't complete. Check devTools." } }
+          });
+        },
+      });
+    } else {
+      // { success: false, message: string }
+      console.error('Form submission failed due to:', submissionResult?.message);
+      // display the error message to the user
+      this.backToOverview();
+      this.router.navigate(['/list'],{
+        state: { toast: { type: "error", message: "Operation couldn't complete. Check devTools." } }
+      });
     }
-    
-    // Handle observable returned from HTTP request
-    submission.subscribe({
-      next: (response) => {
-        console.log('Form submitted successfully', response);
-        // Handle success - redirect, show success message, etc.
-      },
-      error: (error) => {
-        console.error('Error submitting form', error);
-        // Handle error - show error message
-      }
-    }); */
   }
 }

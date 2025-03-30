@@ -1,7 +1,7 @@
 <div class="letter-container">
-  @for (letter of letters(); track letter.id) {
+  @for (letter of letters(); track letter.id; let i = $index) {
   <app-card
-    [title]="`Letter ${letter.id}`"
+    [title]="`Letter ${i + 1}`"
     [subtitle]="letter.receiverAddresses[0]"
     [footnote]="letter.subject || '--------------------------------'"
     (cardClick)="onClick(letter)"

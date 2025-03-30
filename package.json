@@ -4,10 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "storybook": "ng run design-system:storybook",
+    "my-app:build": "ng build my-app",
+    "storybook:dev": "ng run design-system:storybook",
+    "storybook:build": "ng run design-system:build-storybook",
     "design-system:build": "ng run design-system:build"
   },
   "private": true,

@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormModel } from './letter-form.interfaces';
+import { FormModel, Letter } from './letter-form.interfaces';
 import { BlockAItem } from '../blockA-dialog/BlockA.interfaces';
 import { clientNameValidator } from './letter-form.utils';
+import { formMode } from '../navbar/navbar.component';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LetterFormService {
-  constructor() {}
+  private apiUrl = environment.apiUrl+"/letters"
+  constructor(private http: HttpClient) {}
 
   form: FormGroup<FormModel> = new FormGroup<FormModel>({
+    id: new FormControl<string>('', { nonNullable: true }), 
     senderAddress: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
@@ -28,16 +34,22 @@ export class LetterFormService {
     footnote: new FormControl(null),
   });
 
-  submitForm() {
+  submitForm(formMode: formMode): Observable<Letter> | { success: false, message: string } {
     if (!this.form.valid) {
       this.form.markAllAsTouched();
       return { success: false, message: 'Form validation failed' };
     }
 
-    const formData = this.form.value;
-    
-    console.log(formData);
-    return
+    const formData = this.form.getRawValue(); 
+
+    if (formMode === 'create') {
+      const { id, ...postData } = formData; // Omit id for create
+      return this.http.post<Omit<Letter, 'id'>>(`${this.apiUrl}`, postData) as Observable<Letter>;
+    } else if (formMode === 'edit' && formData.id) {
+      return this.http.put<Letter>(`${this.apiUrl}/${formData.id}`, formData);
+    } else {
+      return { success: false, message: 'Invalid form mode or missing ID for edit' };
+    }
   }
 
   resetForm() {

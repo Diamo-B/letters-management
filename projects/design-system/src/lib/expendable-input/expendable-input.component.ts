@@ -21,62 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     TextFieldModule,
   ],
-  template: `
-    <mat-form-field
-      [floatLabel]="floatingLabel"
-      appearance="outline"
-      [style.width]="type === 'text' ? '100%' : ''"
-    >
-      <mat-label>{{ label }}</mat-label>
-
-      @if (type === 'text' && autoresize) {
-      <textarea
-        matInput
-        [formControl]="control"
-        [placeholder]="placeholder"
-        [cdkTextareaAutosize]="autoresize"
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="6"
-      ></textarea>
-      } @else if (type === 'date') {
-      <ng-container>
-        <div style="display: flex;">
-          <input
-            matInput
-            [matDatepicker]="picker"
-            [formControl]="control"
-            [placeholder]="placeholder"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-        </div>
-        <mat-datepicker #picker></mat-datepicker>
-      </ng-container>
-      } @else {
-      <input
-        matInput
-        [formControl]="control"
-        [placeholder]="placeholder"
-        [type]="type"
-      />
-      } @if(showError) {
-      <mat-error>
-        {{ errorMessage || getDefaultErrorMessage() }}
-      </mat-error>
-      }
-    </mat-form-field>
-  `,
-  styles: `
-    ::ng-deep .mat-mdc-form-field-infix {
-  padding: 0 !important;
-}
-  ::ng-deep .mat-mdc-form-field-infix{
-    display: flex;
-    align-items: center;
-  }
-  `,
+  templateUrl:"./expandable-input.template.html",
+  styleUrls: ['./expandable-input.styles.scss'],
 })
 export class ExpandableInputComponent implements OnInit {
   @Input() label: string = '';
@@ -87,7 +33,7 @@ export class ExpandableInputComponent implements OnInit {
   @Input() floatingLabel: 'auto' | 'always' = 'auto';
   @Input() forceMarkAsTouched: boolean = false;
   @Input() alwaysShowError: boolean = false;
-  @Input() type: 'text' | 'date' = 'text'; // Add 'date' type support
+  @Input() type: 'text' | 'date' = 'text';
 
   ngOnInit() {
     if (this.forceMarkAsTouched) {

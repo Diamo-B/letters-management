@@ -174,5 +174,8 @@ $scales: (
     padding-bottom: $value;
   }
 
-  
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  background: none !important;
 }

@@ -1,0 +1,40 @@
+<mat-form-field
+  [floatLabel]="floatingLabel"
+  appearance="outline"
+  [style.width]="type === 'text' ? '100%' : ''"
+>
+  <mat-label>{{ label }}</mat-label>
+
+  @if (type === 'text' && autoresize) {
+  <textarea
+    matInput
+    [formControl]="control"
+    [placeholder]="placeholder"
+    [cdkTextareaAutosize]="autoresize"
+    cdkAutosizeMinRows="1"
+    cdkAutosizeMaxRows="6"
+  ></textarea>
+  } @else if (type === 'date') {
+  <ng-container>
+    <div style="display: flex">
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [formControl]="control"
+        [placeholder]="placeholder"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    </div>
+    <mat-datepicker #picker></mat-datepicker>
+  </ng-container>
+  } @else {
+  <input
+    matInput
+    [formControl]="control"
+    [placeholder]="placeholder"
+    [type]="type"
+  />
+  } @if(showError) {
+  <mat-error> {{ errorMessage || getDefaultErrorMessage() }} </mat-error>
+  }
+</mat-form-field>

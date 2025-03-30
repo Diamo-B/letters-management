@@ -8,75 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   selector: 'app-generic-dialog-container',
   standalone: true,
   imports: [CommonModule, MatFormFieldModule],
-  template: `
-    <div class="mb-5">
-      <p class="title-gray text-xs ml-5">{{ title }}</p>
-      <div
-        class="content text-sm text-gray"
-        (click)="openDialog()"
-        [ngClass]="{
-          'error-border':
-            parentForm.get(formControlName)?.invalid &&
-            parentForm.get(formControlName)?.touched
-        }"
-      >
-        @if (isFormArray && getFormArrayValues().length > 0) {
-          @for (item of getFormArrayValues(); track $index) {
-            @if (formatItem) {
-              @if (getFormattedItemAsArray(item).length > 1) {
-                @for (line of getFormattedItemAsArray(item); track $index) {
-                  <div>{{ line }}</div>
-                }
-              } @else {
-                <div>{{ getFormattedItemAsArray(item)[0] }}</div>
-              }
-            } @else {
-              <div>{{ item }}</div>
-            }
-          }
-        } @else if (!isFormArray && getSingleControlValue() && parentForm.get(formControlName)?.valid) {
-          @if (formatItem) {
-            @if (getFormattedItemAsArray(getSingleControlValue()).length > 1) {
-              @for (line of getFormattedItemAsArray(getSingleControlValue()); track $index) {
-                <div>{{ line }}</div>
-              }
-            } @else {
-              <div>{{ getFormattedItemAsArray(getSingleControlValue())[0] }}</div>
-            }
-          } @else {
-            <div>{{ getSingleControlValue() | json }}</div>
-          }
-        } @else {
-          <div>Click to add {{ title }}</div>
-        }
-      </div>
-      @if (parentForm.get(formControlName)?.invalid && parentForm.get(formControlName)?.touched) {
-        <mat-error class="text-xs pl-4 ">{{ errorMessage }}</mat-error>
-      }
-    </div>
-  `,
-  styles: [
-    `
-      .title-gray {
-        color: #818181;
-      }
-
-      .text-gray {
-        color: rgb(37, 37, 37);
-      }
-
-      .content {
-        border: 2px dotted #999;
-        border-radius: 7px;
-        padding: 20px 15px;
-        cursor: pointer;
-      }
-
-      .error-border {
-        border: 2px dotted red;
-      }
-    `,
-  ],
+  templateUrl: './dialog-container.template.html',
+  styleUrls:['./dialog-container.styles.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -137,21 +70,20 @@ export class GenericDialogContainerComponent implements OnInit, ControlValueAcce
     this.disabled = isDisabled;
   }
 
-  // Helper method to get values from FormArray
   getFormArrayValues(): any[] {
     if (!this.isFormArray) return [];
     const formArray = this.parentForm.get(this.formControlName) as FormArray;
     return formArray.controls.map(control => control.value);
   }
 
-  // Helper method to get value from a single FormControl
+  // method to get value from a single FormControl
   getSingleControlValue(): any {
     if (this.isFormArray) return null;
     const control = this.parentForm.get(this.formControlName);
     return control ? control.value : null;
   }
 
-  // Helper method to always return an array for *ngFor
+  // this is to always return an array for *ngFor
   getFormattedItemAsArray(item: any): string[] {
     if (!this.formatItem) {
       return typeof item === 'object' && item !== null

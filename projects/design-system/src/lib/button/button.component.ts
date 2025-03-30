@@ -14,24 +14,38 @@ import { RouterModule } from '@angular/router';
       background-color: white;
       color: black;
     }
+    
+    .icon-small {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+      line-height: 16px;
+    }
+    
+    .icon-medium {
+      font-size: 24px;
+      height: 24px;
+      width: 24px;
+      line-height: 24px;
+    }
+    
+    .icon-large {
+      font-size: 32px;
+      height: 32px;
+      width: 32px;
+      line-height: 32px;
+    }
+
   `,
 })
 export class ButtonComponent {
   @Input() label: string = 'Button';
   @Input() color: 'primary' | 'accent' | 'warn' | 'neutral' = 'primary';
-  @Input() variant:
-    | 'Basic'
-    | 'Link'
-    | 'Raised'
-    | 'Stroked'
-    | 'Flat'
-    | 'Icon'
-    | 'IconWithText'
-    | 'IconWithLink' = 'Basic';
+  @Input() variant: 'Basic' | 'Link' | 'Raised' | 'Stroked' | 'Flat' | 'Icon' | 'IconWithText' | 'IconWithLink' = 'Basic';
   @Input() disabled: boolean = false;
   @Input() icon: string = '';
   @Input() customClasses: string[] = [];
-  @Input() routerLink?: string | any[]; // Supports both string and array
+  @Input() routerLink?: string | string[];
   @Input() routerLinkActive: string = 'active';
 
   get buttonClasses(): string {

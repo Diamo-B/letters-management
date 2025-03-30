@@ -16,6 +16,7 @@ interface ExpandableInputStoryProps extends ExpandableInputComponent {
 const meta: Meta<ExpandableInputStoryProps> = {
   title: 'Design system/ExpandableInput',
   component: ExpandableInputComponent,
+  tags: ['autodocs'],
   decorators: [
     applicationConfig({
       providers: [
@@ -161,7 +162,6 @@ export const Disabled: Story = {
   })
 };
 
-// 🆕 Date input story
 export const DateInput: Story = {
   args: {
     ...Args,
